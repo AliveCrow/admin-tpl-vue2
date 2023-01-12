@@ -1,0 +1,19 @@
+@import "./transition.scss";
+
+* {
+  box-sizing: border-box;
+}
+
+#nprogress .bar {
+  background: $--color-primary !important; //颜色可修改
+}
+
+.el-aside {
+  transition: width 0.28s;
+  -moz-transition: width 0.28s; /* Firefox 4 */
+  -webkit-transition: width 0.28s; /* Safari and Chrome */
+  -o-transition: width 0.28s; /* Opera */
+  transition: all 0.28s ease-in-out;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
+}

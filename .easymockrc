@@ -1,0 +1,11 @@
+{
+    "host": "http://124.222.191.214:7300",
+    "output": "src/api",
+    "template": "./easymock-tpl",
+    "projects": [
+        {
+            "id": "63be55136a346b217cb73a60",
+            "name": "auth"
+        }
+    ]
+}
