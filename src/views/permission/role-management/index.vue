@@ -1,12 +1,15 @@
 <template>
     <div>
-        dashboard
-      {{ new Date() }}
+        RoleManager
     </div>
 </template>
 
 <script>
 export default {
-    name: 'Dashboard',
+    name: 'RoleManager'
 }
 </script>
+
+<style lang="scss" scoped>
+
+</style>

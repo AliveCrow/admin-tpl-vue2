@@ -4,6 +4,7 @@
  * @returns {function(*): any}
  */
 export function loadView(view) {
+	console.log(`@/views${view}`);
 	return (resolve) => require([`@/views${view}`], resolve
 	)
 }

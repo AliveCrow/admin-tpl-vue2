@@ -1,12 +1,15 @@
 <template>
     <div>
-        dashboard
-      {{ new Date() }}
+        zip
     </div>
 </template>
 
 <script>
 export default {
-    name: 'Dashboard',
+
 }
 </script>
+
+<style lang="scss" scoped>
+
+</style>

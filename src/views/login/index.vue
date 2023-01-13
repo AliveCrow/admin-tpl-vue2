@@ -13,9 +13,10 @@
               <el-input clearable v-model="loginForm.password" :type="passwordType"
                         placeholder="密码">
                 <template #suffix v-if="loginForm.password">
-                  <svg-icon v-if="!showPassword" icon-class="password-covered"
-                            @click.native="showPassword = true"></svg-icon>
-                  <svg-icon v-else icon-class="password-checked" @click.native="showPassword = false"></svg-icon>
+                  <Icon :size="15">
+                    <Eye v-if="!showPassword" @click.native="showPassword = true"/>
+                    <EyeOff v-else @click.native="showPassword = false"/>
+                  </Icon>
                 </template>
               </el-input>
             </el-form-item>
@@ -33,8 +34,13 @@
 </template>
 
 <script>
+import {Eye, EyeOff} from '@v2icons/ionicons5'
+
 export default {
   name: "indexView",
+  components: {
+    Eye, EyeOff
+  },
   data() {
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
@@ -84,6 +90,16 @@ export default {
 
 <style scoped lang="scss">
 .login-view {
+
+
+  .xicon {
+    transition: all .25s;
+
+    &:hover {
+      color: #919399
+    }
+  }
+
   .el-row, .el-col {
     height: 100vh;
   }

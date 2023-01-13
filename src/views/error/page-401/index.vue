@@ -1,12 +1,15 @@
 <template>
     <div>
-        dashboard
-      {{ new Date() }}
+        401
     </div>
 </template>
 
 <script>
 export default {
-    name: 'Dashboard',
+    name: 'Page401',
 }
 </script>
+
+<style lang="scss" scoped>
+
+</style>

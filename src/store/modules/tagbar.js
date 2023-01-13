@@ -7,7 +7,6 @@ const state = {
 const mutations = {
     SET_TAG_STACK(state, tagStack) {
         state.tagStack = tagStack
-        state.keepAliveTagStack = tagStack.map(r => r.name)
     },
     SET_KEEP_ALIVE_TAG_STACK(state, tagStack) {
         state.keepAliveTagStack = tagStack.map(r => r.name)
@@ -16,7 +15,9 @@ const mutations = {
         const isNewTag = state.tagStack.some(t => t.name !== tag.name)
         if (isNewTag) {
             state.tagStack.push(tag)
-            state.keepAliveTagStack.push(tag.name)
+            if (!tag.meta.noCache) {
+                state.keepAliveTagStack.push(tag.name)
+            }
         }
     },
     REMOVE_TAG(state, tag) {

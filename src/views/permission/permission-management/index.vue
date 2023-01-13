@@ -1,14 +1,13 @@
 <template>
     <div>
-        TableView
-        {{ new Date() }}
+        PermissionManagement
         <el-input v-model="value"></el-input>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'TableView',
+    name: 'PermissionManagement',
     data() {
         return {
             value: ''
@@ -16,3 +15,7 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+
+</style>

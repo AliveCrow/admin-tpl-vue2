@@ -20,6 +20,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { constantRouterMap } from "@/router";
 
 export default {
     name: 'TabBar',
@@ -46,8 +47,12 @@ export default {
     },
     methods: {
         initTags() {
-            const fixedTag = this.permissionRoutes.filter(route => route.meta.isFixed)
+            const initMenu = constantRouterMap.find(r => r.name === 'layout')
+            const menus = this.menus.length === 0 ? initMenu.children : this.menus
+            const fixedTag = menus.filter(route => route.meta.isFixed)
+            const cacheTag = menus.filter(route => !route.meta.noCache)
             this.$store.commit('tagbar/SET_TAG_STACK', fixedTag);
+            this.$store.commit('tagbar/SET_KEEP_ALIVE_TAG_STACK', cacheTag);
         },
         addTags() {
             const { name } = this.$route
@@ -63,6 +68,7 @@ export default {
         closeTag(tag) {
             this.$store.commit('tagbar/REMOVE_TAG', tag)
             const lastTag = this.tagStack[this.tagStack.length - 1]
+
             this.$router.push({ name: lastTag.name })
         },
         clickTag(tag) {
@@ -71,7 +77,6 @@ export default {
     },
     watch: {
         $route(val) {
-
             const hasTag = this.tagStack.some(r => r.name === val.name)
             if (!hasTag) {
                 this.$store.commit('tagbar/ADD_TAG', val)

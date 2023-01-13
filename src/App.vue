@@ -1,8 +1,20 @@
 <template>
-    <div>
-      <router-view/>
-    </div>
+  <div>
+    <IconConfigProvider size="15">
+      <router-view />
+    </IconConfigProvider>
+  </div>
 </template>
+
+
+<script>
+import { IconConfigProvider } from '@v2icons/utils'
+export default {
+  components: {
+    IconConfigProvider
+  }
+}
+</script>
 
 <style lang="scss">
 #app {

@@ -2,89 +2,57 @@ import router, { constantRouterMap, asyncRouterMap } from "@/router";
 import { loadView } from '@/utils'
 import api from '@/api'
 import Layout from '@/layout'
+import _ from 'lodash'
 
-function generateRoute(array) {
-	const result = array.map(item => {
+function generateRoute(array, parentRoute = {}) {
+
+	const result = array.map(route => {
+		const routePath = _.startsWith(route.path, '/') ? _.trimStart(route.path, '/') : route.path
 		const parent = {
-			name: item.name,
-			path: item.path,
-			children: item.children || [],
-			meta: item?.meta || {
-				isFixed: false
+			path: route.path,
+			name: route?.name ? route.name : _.upperFirst(_.camelCase(routePath)),
+			component: parentRoute.path ? loadView(parentRoute.path + '/' + route.path) : Layout,
+			hidden: route?.hidden || false,
+			meta: {
+				noCache: true,
+				isFixed: false,
+				icon: '',
+				...(route?.meta || {})
 			},
+			children: route?.children || []
 		}
 
-		if (item?.component) {
-			parent.component = loadView(item.component)
-		}
-
-		if (item.children && item.children.length > 0) {
-			parent.children = item.children.map(r => {
-				return {
-					name: r.name,
-					path: r.path,
-					component: loadView(r.component),
-					children: r.children || [],
-					meta: r?.meta || {
-						isFixed: false
-					},
-				}
-			})
-		}
-		return parent
-	}).concat([{ path: '*', redirect: '/404', hidden: true, meta: { isFixed: false } }])
-	return result
-
-
-}
-
-export function generateMenu(array) {
-	return array.map(item => {
-		const parent = {
-			name: item.name,
-			path: item.path,
-			hidden: item.hidden || false,
-			children: [],
-			meta: item?.meta || {}
-		}
-		if (item.children && item.children.length > 0) {
-			parent.children = item.children.map(r => {
-				return {
-					name: r.name,
-					path: `${item.path}/${r.path}`,
-					children: r.children || [],
-					hidden: r.hidden || false,
-					meta: r?.meta || {}
-				}
-			})
+		if (route.children && route.children.length > 0) {
+			parent.children = generateRoute(route.children, parent)
 		}
 		return parent
 	})
+	return result
 }
+
 
 const state = {
 	menus: [],
-	routes: []
+	routes: constantRouterMap[0].children
 }
 const mutations = {
 	SET_MENU: (state, menus) => {
-		state.menus = menus
+		const initMenu = constantRouterMap.find(r => r.name === 'layout')
+		state.menus = initMenu.children.concat(menus || [])
 	},
 	SET_ROUTES: (state, routes) => {
-		state.routes = routes
+		state.routes = constantRouterMap.concat(routes).filter(route => !route.hidden)
 	}
 }
 const actions = {
 	GenerateRoutes({ commit }) {
 		return new Promise((resolve, reject) => {
 			api.user.getPermission().then(res => {
-				const routes = generateRoute(res.data.permission)
-				routes.forEach(item => {
-					router.addRoute('home', item)
+				const permissionRoutes = generateRoute(res.data.permission).concat([{ path: '*', redirect: '/404', hidden: true, meta: { isFixed: false } }])
+				commit('SET_ROUTES', permissionRoutes)
+				permissionRoutes.forEach(item => {
+					router.addRoute(item)
 				})
-				console.log(generateMenu(res.data.permission));
-				commit('SET_MENU', generateMenu(res.data.permission))
-				commit('SET_ROUTES', routes)
 				resolve()
 			})
 		})
