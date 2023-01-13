@@ -6,12 +6,10 @@
           @select="clickLink">
           <Logo :collapse="isFold" />
           <template v-for="route in permissionRoutes">
-            <template v-if="!route.meta">
-              <MenuItem v-for="child in route.children" :route="child" :index="menuIndex(child)" :key="child.path" />
-            </template>
-            <MenuItem :route="route" :index="menuIndex(route)" :key="route.path"
-              v-else-if="route.meta && route.children.length === 0" />
-            <SubMenu :route="route" :key="route.name" v-else />
+            <SubMenu v-if="route.children.length > 0 && route?.meta?.title" :route="route" :key="route.name" />
+            <MenuItem v-else-if="route.children.length > 0 && !route?.meta?.title" v-for="child in route.children"
+              :route="child" :key="child.path" />
+            <MenuItem v-else v-for="child in route.children" :route="child" :key="child.name" />
           </template>
         </el-menu>
       </el-aside>
@@ -62,16 +60,10 @@ export default {
       'isFold',
       'keepAliveTagStack'
     ]),
-    menuIndex() {
-      return (route) => {
-        console.log(this.permissionRoutes);
-        return _.startsWith(route.path, '/') ? route.path : `/${route.path}`
-      }
-    }
+
   },
   methods: {
     clickLink(path) {
-
 
     },
     refreshRoute(date) {

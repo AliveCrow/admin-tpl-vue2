@@ -1,6 +1,6 @@
 <template>
   <div>
-    <IconConfigProvider size="15">
+    <IconConfigProvider size="15" tag="i">
       <router-view />
     </IconConfigProvider>
   </div>

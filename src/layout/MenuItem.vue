@@ -1,13 +1,16 @@
 <template>
-    <el-menu-item :index="index" :key="route.path">
+    <el-menu-item :index="menuIndex(route)" :key="route.path">
         <Icon>
             <component :is="route.meta.icon" />
         </Icon>
-        <span slot="title">{{ route.meta.title }}</span>
+        <template #title>
+            {{ route.meta.title }}
+        </template>
     </el-menu-item>
 </template>
 
 <script>
+import _ from 'lodash'
 export default {
     name: 'MenuItem',
     props: {
@@ -30,7 +33,18 @@ export default {
         },
         index: {
             type: String,
+            required: false,
             default: ''
+        }
+    },
+    computed: {
+        menuIndex() {
+            return (route) => {
+                if (!this.index) {
+                    return _.startsWith(route.path, '/') ? route.path : `/${route.path}`
+                }
+                return this.index
+            }
         }
     }
 }

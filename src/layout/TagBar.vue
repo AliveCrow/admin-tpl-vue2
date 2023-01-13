@@ -1,5 +1,5 @@
 <template>
-    <div class="tab-bar-view">
+    <el-scrollbar class="tab-bar-view">
         <span v-for="tag in tagStack" :key="tag.name"
             :class="'tab-item' + [isFixed(tag) ? ' fixed' : ''] + [isCurrent(tag) ? ' current' : '']"
             @click="clickTag(tag)">
@@ -7,15 +7,7 @@
             <i v-if="isCurrent(tag)" class="el-icon-refresh" @click="refresh"></i>
             <i v-if="!isFixed(tag)" class="el-icon-close" @click="closeTag(tag)"></i>
         </span>
-        <!-- <span class="tab-item current">
-            {{ $route.name }}
-            <i class="el-icon-refresh"></i>
-            <i class="el-icon-close"></i>
-        </span>
-        <span class="tab-item">
-            {{ $route.name }}
-        </span> -->
-    </div>
+    </el-scrollbar>
 </template>
 
 <script>
@@ -93,10 +85,20 @@ $tab-bar-height: 34px;
 .tab-bar-view {
     height: $tab-bar-height;
     padding-left: 5px;
-    border-bottom: 1px solid rgba($--color-primary, .1);
+    // border-bottom: 1px solid rgba($--color-primary, .1);
     white-space: nowrap;
     position: relative;
     width: 100%;
+    overflow-x: hidden;
+
+    :deep(.el-scrollbar__bar) {
+        bottom: 0;
+    }
+
+    :deep(.el-scrollbar__wrap) {
+        height: 49px;
+        overflow-x: hidden;
+    }
 
 
     .tab-item {
@@ -106,7 +108,7 @@ $tab-bar-height: 34px;
         height: $tab-bar-height;
         line-height: $tab-bar-height;
         border: 1px solid rgba($--color-primary, .1);
-        margin-right: 4px;
+        margin-right: 10px;
         background-color: #eee;
         cursor: default;
 
@@ -155,8 +157,8 @@ $tab-bar-height: 34px;
         box-shadow: none !important;
         border-bottom: 1px solid #fff;
 
-        &:hover {
 
+        &:hover {
             border-bottom: 1px solid $--color-primary;
         }
     }
