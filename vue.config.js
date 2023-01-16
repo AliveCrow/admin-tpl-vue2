@@ -13,6 +13,7 @@ function createServerConfig(compilation) {
 
 module.exports = defineConfig({
   transpileDependencies: true,
+  productionSourceMap: false,
   devServer: {
     proxy: {
       [process.env.VUE_APP_BASE_URL]: {

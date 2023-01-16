@@ -9,11 +9,11 @@ import '@/styles/element-variables.scss'
 import '@/styles/index.scss'
 import '@/router/before'
 
-import installxIcons from '@/plugins/xicons'
+import installxIcons from '@/utils/plugins/xicons'
 import { loadLocalConfig } from '@/utils'
 
 loadLocalConfig().then(res => {
-  console.log('res: ', res);
+
   Vue.config.productionTip = false
   Vue.prototype.$config = res
 
@@ -26,6 +26,6 @@ loadLocalConfig().then(res => {
     render: h => h(App)
   }).$mount('#app')
 }).catch(err => {
-  console.log('err: ', err);
+
 })
 
