@@ -16,6 +16,7 @@ specifiers:
   element-ui: ^2.15.12
   eslint: ^7.32.0
   eslint-plugin-vue: ^8.0.3
+  generate-asset-webpack-plugin-new: ^1.0.1
   js-cookie: ^3.0.1
   lodash: ^4.17.21
   normalize.css: ^8.0.1
@@ -48,6 +49,7 @@ devDependencies:
   element-ui: 2.15.12_vue@2.7.14
   eslint: 7.32.0
   eslint-plugin-vue: 8.7.1_eslint@7.32.0
+  generate-asset-webpack-plugin-new: 1.0.1
   js-cookie: 3.0.1
   lodash: 4.17.21
   normalize.css: 8.0.1
@@ -4508,6 +4510,10 @@ packages:
 
   /functional-red-black-tree/1.0.1:
     resolution: {integrity: sha512-dsKNQNdj6xA3T+QlADDA7mOSlX0qiMINjn0cgr+eGHGsbSHzTabcIogz2+p/iqP1Xs6EP/sS2SbqH+brGTbq0g==}
+    dev: true
+
+  /generate-asset-webpack-plugin-new/1.0.1:
+    resolution: {integrity: sha512-KSJpqETSLUcsTtzS50+vfPKBRC9SDxfIEUdZgm/oJiD3Ite4Bgzj3nUNRksjcKQYBOqTvWH2zBulQH40Po5L0g==}
     dev: true
 
   /gensync/1.0.0-beta.2:

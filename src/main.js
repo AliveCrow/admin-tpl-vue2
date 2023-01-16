@@ -10,14 +10,22 @@ import '@/styles/index.scss'
 import '@/router/before'
 
 import installxIcons from '@/plugins/xicons'
+import { loadLocalConfig } from '@/utils'
 
-Vue.config.productionTip = false
+loadLocalConfig().then(res => {
+  console.log('res: ', res);
+  Vue.config.productionTip = false
+  Vue.prototype.$config = res
 
-Vue.use(ElementUI, { zIndex: 3000 }); // element-ui 全局配置
-Vue.use(installxIcons)
+  Vue.use(ElementUI, { zIndex: 3000 }); // element-ui 全局配置
+  Vue.use(installxIcons)
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+  new Vue({
+    router,
+    store,
+    render: h => h(App)
+  }).$mount('#app')
+}).catch(err => {
+  console.log('err: ', err);
+})
+

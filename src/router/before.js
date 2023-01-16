@@ -3,6 +3,7 @@ import store from '@/store'
 import tokenUtil from '@/utils/auth'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
+import { getPageTitle } from '@/utils'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
@@ -10,6 +11,8 @@ const whiteList = ['/login'] // 免登录页面
 router.beforeEach((to, from, next) => {
 	NProgress.start()
 	const token = tokenUtil.get()
+
+	document.title = getPageTitle(to.meta.title)
 
 	if (token) {
 		if (to.path === '/login') {

@@ -1,5 +1,15 @@
 const { defineConfig } = require('@vue/cli-service')
 const path = require('path')
+const GenerateAssetPlugin = require('generate-asset-webpack-plugin-new');
+
+const config = require('./config/app-config.json');
+function createServerConfig(compilation) {
+  return JSON.stringify(
+    Object.assign({
+      _hash: compilation.hash
+    }, config)
+  )
+}
 
 module.exports = defineConfig({
   transpileDependencies: true,
@@ -27,7 +37,15 @@ module.exports = defineConfig({
       alias: {
         '@': path.resolve(__dirname, 'src'),
       }
-    }
+    },
+    plugins: [
+      new GenerateAssetPlugin({
+        filename: 'config/app-config.json',
+        fn: (compilation, cb) => {
+          cb(null, createServerConfig(compilation));
+        }
+      }),
+    ]
   },
   chainWebpack: (config) => {
     config.module

@@ -19,7 +19,7 @@
           <TagBar @refresh="refreshRoute"></TagBar>
         </el-header>
         <el-main>
-          <transition name="fade-transform" mode="out-in">
+          <transition name="el-fade-in-linear" mode="out-in">
             <keep-alive :include="keepAliveTagStack">
               <router-view :key="$route.name + routeKey"></router-view>
             </keep-alive>
@@ -37,7 +37,6 @@ import AsideHeader from './Header.vue'
 import TagBar from './TagBar.vue';
 import MenuItem from './MenuItem.vue';
 import SubMenu from './SubMenu.vue';
-import _ from 'lodash'
 
 export default {
   name: "LayOut",

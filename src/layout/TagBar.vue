@@ -1,12 +1,14 @@
 <template>
-    <el-scrollbar class="tab-bar-view">
-        <span v-for="tag in tagStack" :key="tag.name"
-            :class="'tab-item' + [isFixed(tag) ? ' fixed' : ''] + [isCurrent(tag) ? ' current' : '']"
-            @click="clickTag(tag)">
-            {{ tag.meta.title }}
-            <i v-if="isCurrent(tag)" class="el-icon-refresh" @click="refresh"></i>
-            <i v-if="!isFixed(tag)" class="el-icon-close" @click="closeTag(tag)"></i>
-        </span>
+    <el-scrollbar>
+        <div class="tab-bar-view">
+            <span v-for="tag in tagStack" :key="tag.name"
+                :class="'tab-item' + [isFixed(tag) ? ' fixed' : ''] + [isCurrent(tag) ? ' current' : '']"
+                @click="clickTag(tag)">
+                {{ tag.meta.title }}
+                <i v-if="isCurrent(tag)" class="el-icon-refresh" @click="refresh"></i>
+                <i v-if="!isFixed(tag)" class="el-icon-close" @click="closeTag(tag)"></i>
+            </span>
+        </div>
     </el-scrollbar>
 </template>
 
@@ -82,24 +84,21 @@ export default {
 <style scoped lang="scss">
 $tab-bar-height: 34px;
 
+:deep(.el-scrollbar__bar) {
+    bottom: 0;
+}
+
+:deep(.el-scrollbar__wrap) {
+    height: 49px;
+    overflow-x: hidden;
+}
+
 .tab-bar-view {
     height: $tab-bar-height;
     padding-left: 5px;
-    // border-bottom: 1px solid rgba($--color-primary, .1);
+    border-bottom: 1px solid rgba($--color-primary, .1);
     white-space: nowrap;
-    position: relative;
     width: 100%;
-    overflow-x: hidden;
-
-    :deep(.el-scrollbar__bar) {
-        bottom: 0;
-    }
-
-    :deep(.el-scrollbar__wrap) {
-        height: 49px;
-        overflow-x: hidden;
-    }
-
 
     .tab-item {
         font-size: .8rem;
@@ -108,9 +107,11 @@ $tab-bar-height: 34px;
         height: $tab-bar-height;
         line-height: $tab-bar-height;
         border: 1px solid rgba($--color-primary, .1);
-        margin-right: 10px;
+        margin-right: 5px;
         background-color: #eee;
         cursor: default;
+        position: relative;
+        z-index: 999999;
 
         i {
             font-size: 10px;
@@ -153,9 +154,8 @@ $tab-bar-height: 34px;
 
     .current {
         background-color: #fff;
-        position: relative;
         box-shadow: none !important;
-        border-bottom: 1px solid #fff;
+        border-bottom: 1px solid #fff !important;
 
 
         &:hover {

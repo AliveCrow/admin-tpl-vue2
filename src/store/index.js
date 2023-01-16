@@ -1,20 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import getters from './getters'
-
-import user from '@/store/modules/user'
-import permission from "@/store/modules/permission";
-import config from '@/store/modules/config'
-import tagbar from '@/store/modules/tagbar';
+import { loadModules } from '@/utils'
 
 Vue.use(Vuex)
 
+const modules = loadModules(require.context('./modules', false, /\.js$/))
+
 export default new Vuex.Store({
   getters,
-  modules: {
-    user,
-    permission,
-    config,
-    tagbar
-  }
+  modules
 })
